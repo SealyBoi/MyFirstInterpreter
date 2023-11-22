@@ -5,6 +5,7 @@ export enum TokenType {
   // Literal Types
   Number,
   Identifier,
+  String,
 
   // Keywords
   Let,
@@ -24,6 +25,7 @@ export enum TokenType {
   OpenBracket,
   CloseBracket,
   BinaryOperator,
+  Comment,
   EOF, // Signified the end of file
 }
 
@@ -92,11 +94,27 @@ export function tokenize(sourceCode: string): Token[] {
       tokens.push(token(src.shift(), TokenType.Comma));
     } else if (src[0] == ".") {
       tokens.push(token(src.shift(), TokenType.Dot));
+    } else if (src[0] == "#") {
+      src.shift(); // shift past first comment sign
+      while (src[0] !== "#") {
+        src.shift(); // shift past all filler
+      }
+      src.shift(); // shift past last comment sign
     } else {
       // Handle multi-character tokens
 
-      // Build number token
-      if (isint(src[0])) {
+      // Handle strings
+      if (src[0] == "\"") {
+        let str = "";
+        src.shift(); // skip the opening "
+        while (src.length > 0 && src[0] != "\"") {
+          str += src.shift();
+        }
+        src.shift(); // skip the closing "
+
+        tokens.push(token(str, TokenType.String));
+      } // Build number token
+      else if (isint(src[0])) {
         let num = "";
         while (src.length > 0 && isint(src[0])) {
           num += src.shift();

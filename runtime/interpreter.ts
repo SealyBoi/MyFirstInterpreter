@@ -1,21 +1,27 @@
-import { RuntimeValue, MK_NUMBER } from "./values.ts";
+import { MK_NUMBER, MK_STRING, RuntimeValue } from "./values.ts";
 import {
   AssignmentExp,
   BinaryExp,
-CallExp,
+  CallExp,
+  FunctionDeclaration,
   Identifier,
   NumericLiteral,
   ObjectLiteral,
   Program,
   Statement,
+  StringLiteral,
   VarDeclaration,
 } from "../frontend/ast.ts";
 import Environment from "./environment.ts";
-import { eval_program, eval_var_declaration } from "./eval/statements.ts";
+import {
+  eval_function_declaration,
+  eval_program,
+  eval_var_declaration,
+} from "./eval/statements.ts";
 import {
   eval_assignment,
   eval_binary_exp,
-eval_call_exp,
+  eval_call_exp,
   eval_identifier,
   eval_object_exp,
 } from "./eval/expressions.ts";
@@ -25,6 +31,8 @@ export function evaluate(astNode: Statement, env: Environment): RuntimeValue {
     // Handle expressions
     case "NumericLiteral":
       return MK_NUMBER((astNode as NumericLiteral).value);
+    case "StringLiteral":
+      return MK_STRING((astNode as StringLiteral).value);
     case "Identifier":
       return eval_identifier(astNode as Identifier, env);
     case "ObjectLiteral":
@@ -41,12 +49,14 @@ export function evaluate(astNode: Statement, env: Environment): RuntimeValue {
     // Handle statements
     case "VarDeclaration":
       return eval_var_declaration(astNode as VarDeclaration, env);
+    case "FunctionDeclaration":
+      return eval_function_declaration(astNode as FunctionDeclaration, env);
 
     // Handle unimplemented type as error
     default:
       console.error(
         "This AST Node has not yet been setup for interpretation.",
-        astNode
+        astNode,
       );
       Deno.exit(1);
   }

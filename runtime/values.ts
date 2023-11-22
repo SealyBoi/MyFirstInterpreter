@@ -1,5 +1,6 @@
+import { Statement } from "../frontend/ast.ts";
 import Environment from "./environment.ts";
-export type ValueType = "null" | "number" | "boolean" | "object" | "native-fn";
+export type ValueType = "null" | "number" | "boolean" | "string" | "object" | "native-fn" | "function";
 
 export interface RuntimeValue {
   type: ValueType;
@@ -32,6 +33,15 @@ export function MK_NUMBER(n = 0) {
   return { type: "number", value: n } as NumberValue;
 }
 
+export interface StringValue extends RuntimeValue {
+  type: "string";
+  value: string;
+}
+
+export function MK_STRING(s = "") {
+  return { type: "string", value: s } as StringValue;
+}
+
 export interface ObjectValue extends RuntimeValue {
   type: "object";
   properties: Map<string, RuntimeValue>;
@@ -46,4 +56,12 @@ export interface NativeFnValue extends RuntimeValue {
 
 export function MK_NATIVE_FN(call: FunctionCall) {
   return { type: "native-fn", call } as NativeFnValue;
+}
+
+export interface FunctionValue extends RuntimeValue {
+  type: "function";
+  name: string;
+  parameters: string[];
+  declarationEnv: Environment;
+  body: Statement[];
 }

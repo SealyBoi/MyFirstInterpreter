@@ -4,6 +4,7 @@ import {
   Exp,
   BinaryExp,
   NumericLiteral,
+  StringLiteral,
   Identifier,
   VarDeclaration,
   AssignmentExp,
@@ -160,6 +161,9 @@ export default class Parser {
     if (this.at().type == TokenType.Equals) {
       this.eat(); // advance past equals
       const value = this.parse_assignment_exp();
+      if (this.at().type == TokenType.Semicolon) {
+        this.eat(); // gets rid of useless semicolon
+      }
       return { value, assignee: left, kind: "AssignmentExp" } as AssignmentExp;
     }
 
@@ -347,6 +351,11 @@ export default class Parser {
           kind: "NumericLiteral",
           value: parseFloat(this.eat().value),
         } as NumericLiteral;
+      case TokenType.String:
+        return {
+          kind: "StringLiteral",
+          value: this.eat().value,
+        } as StringLiteral;
       case TokenType.OpenParen: {
         this.eat(); // eat the opening paren
         const value = this.parse_exp();
