@@ -1,0 +1,17 @@
+fn add (x, y) {
+    let result = x + y;
+    print(result)
+
+    result
+}
+
+fn sub() {
+    fn add (x, y) {
+        let result = x + y;
+        print(result)
+
+        result
+    }
+
+    let foo = 45;
+}
