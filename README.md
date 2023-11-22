@@ -1,4 +1,4 @@
-<h1>MyFirstInterpreter</h1>
+# MyFirstInterpreter
 The goal of this project was to introduce myself back into the world of interpreters
 
 This is a very small interpreter that supports simple variables like strings,
@@ -9,8 +9,7 @@ to work on this in the future, I will likely attempt adding basic if statements,
 for loops, while loops.
 
 To run the project simply clone the repo and, in the command line, type:
-Ex:
-    deno run -A main.ts
+> deno run -A main.ts
 in the project home directory.
 
 If you would like to run the program in the CLI, simply leave the code as is. If
@@ -19,42 +18,37 @@ comment out 'repl();' and uncomment 'run("./test.txt");'. Change the code in
 test.txt to run your own code instead!
 
 To assign variables, use the 'let' or 'const' keywords:
-Ex:
-    let x = 45;
-    const y = 55;
+```
+let x = 45;
+const y = 55;
+```
 
 Const variables cannot be changed after initialization, while let variables can:
-Ex:
-    let x = 1;
-    x = 5; (acceptable)
-    const y = 2;
-    y = 10; (unacceptable)
+```
+let x = 1;
+x = 5;
+```
 
-The data types supported are as follows:
-Ex:
-    Strings: let x = "hello";
-    Booleans: let x = true;
-    Numbers: let x = 5;
+The data types supported are strings, booleans, and numbers:
+* String: let x = "hello";
+* Boolean: let x = true;
+* Number: let x = 5;
 
 You can also create functions using the following syntax:
-Ex:
-    fn {functionName} ({params}) {
-        {bodyOfFunction}
-    }
-
-    fn addTwo (x, y) {
-        x + y
-    }
+```
+fn addTwo (x, y) {
+    x + y
+}
+```
 The last value stated at the end of a function is what will be returned
 when the function finishes executing.
 
 There are also two pre-defined functions in the environment:
-Ex:
-    print(): prints all parameters listed
-    time(): returns current time in milliseconds
+* print(): prints all parameters listed
+* time(): returns current time in milliseconds
 
 An example script/program for you to write could be as follows:
-Ex:
+```
     fn addTwo (x, y) {
         x + y
     }
@@ -62,10 +56,10 @@ Ex:
     let x = 15;
     let y = 15;
     print(addTwo(x, y))
+```
 
 Most importantly, comments are done by using the #:
-Ex:
-    # This is a comment! #
+> # This is a comment! #
 This isn't the coolest way to do comments, but in the manner
 that I read the file it's the easiest.
 
