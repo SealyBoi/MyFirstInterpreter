@@ -49,7 +49,7 @@ An example script/program for you to write could be as follows:
 ```
 
 Most importantly, comments are done by using the #:
-> # This is a comment! #
+> \# This is a comment! #
 This isn't the coolest way to do comments, but in the manner that I read the file it's the easiest.
 
 If anything isn't stated here that you still need help with feel free to reach out and let me know!
